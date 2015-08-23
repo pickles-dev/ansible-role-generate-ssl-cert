@@ -1,0 +1,10 @@
+---
+# tasks file for generate-ssl-cert
+- name: add IPv4 address to openssl config
+  blockinfile:
+    dest: /etc/ssl/openssl.cnf
+    backup: yes
+    marker: yes
+    content: |
+      [v3_ca]
+      subjectAltName = IP:{{ ip_address | mandatory}}
