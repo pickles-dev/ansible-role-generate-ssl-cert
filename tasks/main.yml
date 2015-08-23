@@ -8,6 +8,17 @@
       [v3_ca]
       subjectAltName = IP:{{ ssl_certificate_ip_address | mandatory}}
 
+- name: ensure certificate directories exist
+  file:
+    state: directory
+    path: "{{ ssl_certificate_directory }}/{{ item }}"
+    mode: "0755"
+    owner: root
+    group: root
+  with_items:
+    - certs
+    - private
+
 - name: generate cert file
   command: >
     openssl req -config /etc/ssl/openssl.cnf -x509
