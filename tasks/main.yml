@@ -4,7 +4,16 @@
   blockinfile:
     dest: /etc/ssl/openssl.cnf
     backup: yes
-    marker: yes
     content: |
       [v3_ca]
       subjectAltName = IP:{{ ip_address | mandatory}}
+
+      default_cert
+- name: generate cert file
+  command: >
+    openssl req -config /etc/ssl/openssl.cnf -x509
+    -days 3650 -batch -nodes -newkey rsa:2048
+    -keyout /etc/pki/tls/private/{{ ssl_certificate_basename }}.key
+    -out /etc/pki/tls/certs/{{ ssl_certificate_basename }}.crt
+  args:
+    creates: /etc/pki/tls/certs/{{ ssl_certificate_basename }}.crt

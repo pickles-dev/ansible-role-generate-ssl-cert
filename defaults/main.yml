@@ -1,2 +1,3 @@
 ---
 # defaults file for generate-ssl-cert
+ssl_certificate_basename: default_certificate
