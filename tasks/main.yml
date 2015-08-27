@@ -22,7 +22,7 @@
 - name: generate cert file
   command: >
     openssl req -config /etc/ssl/openssl.cnf -x509
-    -days 3650 -batch -nodes -newkey rsa:2048
+    -days 3650 -batch -nodes -newkey rsa:{{ ssl_certificate_bit_length }}
     -keyout {{ ssl_certificate_directory }}/private/{{ ssl_certificate_basename }}.key
     -out {{ ssl_certificate_directory }}/certs/{{ ssl_certificate_basename }}.crt
   args:

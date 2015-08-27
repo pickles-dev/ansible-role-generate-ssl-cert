@@ -3,3 +3,4 @@
 ssl_certificate_basename: default_certificate
 ssl_certificate_directory: /etc/pki/tls
 ssl_certificate_ip_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.address }}"
+ssl_certificate_bit_length: "2048"
