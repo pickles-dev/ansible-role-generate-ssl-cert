@@ -132,5 +132,4 @@ galaxy_info:
   #- packaging
   #- system
   #- web
-dependencies:
-  - yaegashi.blockinfile
+dependencies: []

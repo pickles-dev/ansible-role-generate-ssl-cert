@@ -1,12 +1,21 @@
 ---
 # tasks file for generate-ssl-cert
-- name: add IPv4 address to openssl config
-  blockinfile:
+- name: add v3 CA block to openssl config
+  lineinfile:
     dest: /etc/ssl/openssl.cnf
+    regexp: ^\[v3_ca\]
+    line: [v3_ca]
+    state: present
     backup: yes
-    content: |
-      [v3_ca]
-      subjectAltName = IP:{{ ssl_certificate_ip_address | mandatory}}
+
+- name: add IPv4 address to openssl config
+  lineinfile:
+    dest: /etc/ssl/openssl.cnf
+    insertafter: \[v3_ca\]
+    regexp: ^subjectAltName
+    line: subjectAltName = IP:{{ ssl_certificate_ip_address | mandatory}}
+    backup: yes
+    state: present
 
 - name: ensure certificate directories exist
   file:
@@ -27,7 +36,6 @@
     -out {{ ssl_certificate_directory }}/certs/{{ ssl_certificate_basename }}.crt
   args:
     creates: "{{ ssl_certificate_directory }}/certs/{{ ssl_certificate_basename }}.crt"
-
 
 - name: fetch back cert file
   fetch:
