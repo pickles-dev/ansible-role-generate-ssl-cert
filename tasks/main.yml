@@ -1,6 +1,7 @@
 ---
 # tasks file for generate-ssl-cert
 - name: add v3 CA block to openssl config
+  sudo: yes
   lineinfile:
     dest: /etc/ssl/openssl.cnf
     regexp: '^\[v3_ca\]'
@@ -9,6 +10,7 @@
     backup: yes
 
 - name: add IPv4 address to openssl config
+  sudo: yes
   lineinfile:
     dest: /etc/ssl/openssl.cnf
     insertafter: '\[v3_ca\]'
@@ -18,6 +20,7 @@
     state: present
 
 - name: ensure certificate directories exist
+  sudo: yes
   file:
     state: directory
     path: "{{ ssl_certificate_directory }}/{{ item }}"
@@ -29,6 +32,7 @@
     - private
 
 - name: generate cert file
+  sudo: yes
   command: >
     openssl req -config /etc/ssl/openssl.cnf -x509
     -days 3650 -batch -nodes -newkey rsa:{{ ssl_certificate_bit_length }}
