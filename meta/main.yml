@@ -9,4 +9,9 @@ galaxy_info:
     - name: Debian
       versions:
         - jessie
+  galaxy_tags:
+    - security
+    - system
+    - encryption
+    - logging
 dependencies: []
