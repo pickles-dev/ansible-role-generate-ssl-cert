@@ -1,0 +1,6 @@
+---
+- hosts: logserver
+  roles:
+    - role: freedomofpress.generate-ssl-cert
+      ssl_certificate_basename: logstash-client
+      ssl_certificate_bit_length: 4096
