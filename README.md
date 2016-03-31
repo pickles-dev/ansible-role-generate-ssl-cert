@@ -29,9 +29,13 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+- hosts: logserver
+  roles:
+    - role: freedomofpress.generate-ssl-cert
+      ssl_certificate_basename: logstash-client
+      ssl_certificate_bit_length: 4096
+```
 
 License
 -------
