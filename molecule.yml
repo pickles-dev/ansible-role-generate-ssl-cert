@@ -2,6 +2,7 @@
 ansible:
   verbose: vv
   diff: yes
+  playbook: examples/generate-cert.yml
 
 vagrant:
   platforms:
@@ -21,6 +22,3 @@ vagrant:
         - network_name: private_network
           type: dhcp
           auto_config: true
-      raw_config_args:
-        - "vm.network 'forwarded_port', guest: 443, host: 4443"
-        - "vm.network 'forwarded_port', guest: 80, host: 8080"
