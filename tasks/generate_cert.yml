@@ -1,5 +1,20 @@
 ---
-- name: Create certificate directories.
+# Creating the base directories separately to enforce strong permissions.
+# If a custom permissions map was provided, those files will be created
+# by the subsequent task.
+- name: Create default certificate directories.
+  become: yes
+  file:
+    state: directory
+    path: "{{ ssl_certificate_directory }}/{{ item.dirname }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - dirname: certs
+      mode: "0755"
+    - dirname: private
+      mode: "0700"
+
+- name: Create custom certificate directories.
   become: yes
   file:
     state: directory
