@@ -23,14 +23,14 @@
   become: yes
   file:
     state: directory
-    path: "{{ ssl_certificate_directory }}/{{ item.dirname }}"
+    path: "{{ item.path }}"
     mode: "{{ item.mode }}"
     owner: root
     group: root
   with_items:
-    - dirname: certs
+    - path: "{{ ssl_certificate_directory }}/certs"
       mode: "0755"
-    - dirname: private
+    - path: "{{ ssl_certificate_directory }}/private"
       mode: "0700"
 
 - name: Check for existing OpenSSL certificate file.
@@ -47,6 +47,20 @@
     -out {{ ssl_certificate_directory }}/certs/{{ ssl_certificate_basename }}.crt
   when: existing_openssl_cert_result.stat.exists == false
         or ssl_certificate_force_generate == true
+
+- name: Set permissions on OpenSSL files.
+  become: yes
+  file:
+    state: file
+    path: "{{ item.path }}"
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+  with_items:
+    - path: "{{ ssl_certificate_directory }}/certs/{{ ssl_certificate_basename }}.crt"
+      mode: "0644"
+    - path: "{{ ssl_certificate_directory }}/private/{{ ssl_certificate_basename }}.key"
+      mode: "0600"
 
 - name: Fetch OpenSSL certificate file back to localhost.
   fetch:
