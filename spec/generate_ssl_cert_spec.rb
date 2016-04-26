@@ -20,7 +20,10 @@ describe file('/etc/pki/tls/private') do
   its('mode') { should eq '700' }
 end
 
-describe x509_certificate('/etc/pki/tls/certs/logstash-client.crt') do
+cert_path = '/etc/pki/tls/certs/logstash-client.crt'
+key_path = '/etc/pki/tls/private/logstash-client.key'
+
+describe x509_certificate(cert_path) do
   it { should be_certificate }
   it { should be_valid }
   its(:subject) { should eq '/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd' }
@@ -31,4 +34,10 @@ describe x509_certificate('/etc/pki/tls/certs/logstash-client.crt') do
   # will fail, and the others (e.g. '>= 100') will still pass, improving the
   # quality of the error output.
   its(:validity_in_days) { should be >= 3000 }
+end
+
+describe x509_private_key(key_path) do
+  it { should be_valid }
+  it { should_not be_encrypted }
+  it { should have_matching_certificate(cert_path) }
 end
