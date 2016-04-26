@@ -26,3 +26,8 @@ ssl_certificate_permissions_map:
     mode: "0600"
     owner: root
     group: root
+
+# The permissions map var may reference user accounts that haven't been
+# configured yet. Usernames include in the list below will be created as
+# system accounts and groups prior to managing the permissions map.
+ssl_certificate_create_users: []
