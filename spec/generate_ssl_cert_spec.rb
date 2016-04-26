@@ -36,8 +36,21 @@ describe x509_certificate(cert_path) do
   its(:validity_in_days) { should be >= 3000 }
 end
 
+describe file(cert_path) do
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  it { should be_readable.by('others') }
+  it { should be_readable.by_user('nobody') }
+end
+
 describe x509_private_key(key_path) do
   it { should be_valid }
   it { should_not be_encrypted }
   it { should have_matching_certificate(cert_path) }
+end
+
+describe file(key_path) do
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  it { should_not be_readable.by_user('nobody') }
 end
