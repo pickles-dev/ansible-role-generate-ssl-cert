@@ -31,3 +31,8 @@ ssl_certificate_permissions_map:
 # configured yet. Usernames include in the list below will be created as
 # system accounts and groups prior to managing the permissions map.
 ssl_certificate_create_users: []
+
+# Dynamic handler support for restarting services in parent roles.
+# Simply declare a list of strings, e.g. "restart apache2", and the
+# associated handler will be called. The parent role must provide the handler.
+ssl_certificate_dynamic_handlers: []
