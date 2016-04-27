@@ -35,6 +35,7 @@
     -out {{ ssl_certificate_permissions_map.cert.path }}
   when: existing_openssl_cert_result.stat.exists == false
         or ssl_certificate_force_generate == true
+  notify: "{{ ssl_certificate_dynamic_handlers }}"
 
 - name: Set permissions on OpenSSL files.
   become: yes
