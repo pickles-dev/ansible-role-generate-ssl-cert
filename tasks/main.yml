@@ -1,54 +1,7 @@
 ---
 # tasks file for generate-ssl-cert
-- name: Add v3 CA block to OpenSSL config (bugfix).
-  become: yes
-  lineinfile:
-    dest: /etc/ssl/openssl.cnf
-    regexp: '^\[v3_ca\]'
-    line: '[v3_ca]'
-    state: present
-    backup: yes
+- include: setup_openssl.yml
 
-- name: Add IPv4 address to OpenSSL config.
-  become: yes
-  lineinfile:
-    dest: /etc/ssl/openssl.cnf
-    insertafter: '\[v3_ca\]'
-    regexp: '^subjectAltName'
-    line: 'subjectAltName = IP:{{ ssl_certificate_ip_address | mandatory }}'
-    backup: yes
-    state: present
+- include: manage_users.yml
 
-- name: Create certificate directories.
-  become: yes
-  file:
-    state: directory
-    path: "{{ ssl_certificate_directory }}/{{ item }}"
-    mode: "0755"
-    owner: root
-    group: root
-  with_items:
-    - certs
-    - private
-
-- name: Check for existing OpenSSL certificate file.
-  stat:
-    path: "{{ ssl_certificate_directory }}/certs/{{ ssl_certificate_basename }}.crt"
-  register: existing_openssl_cert_result
-
-- name: Generate OpenSSL certificate file.
-  become: yes
-  command: >
-    openssl req -config /etc/ssl/openssl.cnf -x509
-    -days 3650 -batch -nodes -newkey rsa:{{ ssl_certificate_bit_length }}
-    -keyout {{ ssl_certificate_directory }}/private/{{ ssl_certificate_basename }}.key
-    -out {{ ssl_certificate_directory }}/certs/{{ ssl_certificate_basename }}.crt
-  when: existing_openssl_cert_result.stat.exists == false
-        or ssl_certificate_force_generate == true
-
-- name: Fetch OpenSSL certificate file back to localhost.
-  fetch:
-    src: "{{ ssl_certificate_directory }}/certs/{{ ssl_certificate_basename }}.crt"
-    dest: files/
-    flat: true
-    fail_on_missing: true
+- include: generate_cert.yml

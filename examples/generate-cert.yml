@@ -1,6 +1,7 @@
 ---
-- hosts: logserver
+- name: Test OpenSSL certificate generation
+  hosts: all
   roles:
-    - role: freedomofpress.generate-ssl-cert
+    - role: ansible-role-generate-ssl-cert
       ssl_certificate_basename: logstash-client
       ssl_certificate_bit_length: 4096
