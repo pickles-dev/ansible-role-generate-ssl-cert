@@ -1,8 +1,7 @@
 ---
 galaxy_info:
-  author: Conor Schaefer (@conorsch)
+  author: Conor Schaefer (@conorsch), Julien Roubieu (@jroubieu)
   description: Generate self-signed OpenSSL certificates.
-  company: Freedom of the Press Foundation (@freedomofpress)
   license: MIT
   min_ansible_version: 1.9
   platforms:

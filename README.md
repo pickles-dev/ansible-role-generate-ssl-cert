@@ -5,6 +5,9 @@ Generate a self-signed OpenSSL keypair. The private key will stay on the
 remote server, and the certificate will be copied back to the Ansible controller
 for distribution to other hosts.
 
+This role was forked from the great freedomofpress.generate-ssl-cert to add a Common Name (CN) subject
+to the generated certificate.
+
 Requirements
 ------------
 
@@ -61,7 +64,7 @@ Including an example of how to use your role (for instance, with variables passe
 ```
 - hosts: logserver
   roles:
-    - role: freedomofpress.generate-ssl-cert
+    - role: pickles-dev.generate-ssl-cert
       ssl_certificate_basename: logstash-client
       ssl_certificate_bit_length: 4096
       ssl_certificate_common_name: logs.domain.com
