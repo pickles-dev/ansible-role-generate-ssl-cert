@@ -26,7 +26,7 @@ key_path = '/etc/pki/tls/private/logstash-client.key'
 describe x509_certificate(cert_path) do
   it { should be_certificate }
   it { should be_valid }
-  its(:subject) { should eq '/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd' }
+  its(:subject) { should include 'CN=logs.domain.com' }
   its(:keylength) { should be >= 2048 }
   its(:validity_in_days) { should_not be < 100 }
   its(:validity_in_days) { should be >= 100 }
