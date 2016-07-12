@@ -1,7 +1,7 @@
 generate-ssl-cert
 =================
 
-Generate a self-signed OpenSSL keypair. The private key will stay on the 
+Generate a self-signed OpenSSL keypair. The private key will stay on the
 remote server, and the certificate will be copied back to the Ansible controller
 for distribution to other hosts.
 
@@ -18,6 +18,7 @@ ssl_certificate_basename: default_certificate
 ssl_certificate_directory: /etc/pki/tls
 ssl_certificate_ip_address: "{{ ansible_default_ipv4.address }}"
 ssl_certificate_bit_length: "2048"
+ssl_certificate_common_name: ""
 
 # Role does not clobber existing keys with same name. Set
 # the force option to true to clobber.
@@ -63,6 +64,7 @@ Including an example of how to use your role (for instance, with variables passe
     - role: freedomofpress.generate-ssl-cert
       ssl_certificate_basename: logstash-client
       ssl_certificate_bit_length: 4096
+      ssl_certificate_common_name: logs.domain.com
 ```
 
 License

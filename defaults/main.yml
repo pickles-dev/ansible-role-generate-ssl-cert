@@ -4,6 +4,7 @@ ssl_certificate_basename: default_certificate
 ssl_certificate_directory: /etc/pki/tls
 ssl_certificate_ip_address: "{{ ansible_default_ipv4.address }}"
 ssl_certificate_bit_length: "2048"
+ssl_certificate_common_name: ""
 
 # Role does not clobber existing keys with same name. Set
 # the force option to true to clobber.

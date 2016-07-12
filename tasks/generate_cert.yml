@@ -30,6 +30,7 @@
   become: yes
   command: >
     openssl req -config /etc/ssl/openssl.cnf -x509
+    -subj '/CN={{ ssl_certificate_common_name }}/'
     -days 3650 -batch -nodes -newkey rsa:{{ ssl_certificate_bit_length }}
     -keyout {{ ssl_certificate_permissions_map.key.path }}
     -out {{ ssl_certificate_permissions_map.cert.path }}
